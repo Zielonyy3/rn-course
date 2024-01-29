@@ -8,6 +8,7 @@ import ManageExpense from "./screens/ManageExpense";
 import RecentExpenses from "./screens/RecentExpenses";
 import {GlobalStyles} from "./constants/styles";
 import {Ionicons} from '@expo/vector-icons';
+import IconButton from "./components/UI/IconButton";
 
 const Stack = createNativeStackNavigator();
 
@@ -15,21 +16,30 @@ const Tab = createBottomTabNavigator();
 
 function ExpensesOverview() {
     return (
-        <Tab.Navigator screenOptions={{
+        <Tab.Navigator screenOptions={({navigation}) => ({
             headerStyle: {backgroundColor: GlobalStyles.colors.primary500},
             headerTintColor: 'white',
             tabBarStyle: {backgroundColor: GlobalStyles.colors.primary500},
             tabBarActiveTintColor: GlobalStyles.colors.accent500,
-        }}>
+            headerRight: ({tintColor}) => (
+                <IconButton icon={'add'}
+                            size={24}
+                            color={tintColor}
+                            onPress={() => {
+                                navigation.navigate('ManageExpense');
+                            }}
+                />
+            )
+        })}>
             <Tab.Screen name="RecentExpenses" component={RecentExpenses} options={{
                 title: 'Recent Expenses',
                 tabBarLabel: 'Recent',
-                tabBarIcon: ({color, size}) => <Ionicons name={'hourglass'} size={size} color={color} />
+                tabBarIcon: ({color, size}) => <Ionicons name={'hourglass'} size={size} color={color}/>
             }}/>
             <Tab.Screen name="AllExpenses" component={AllExpenses} options={{
                 title: 'All Expenses',
                 tabBarLabel: 'All Expenses',
-                tabBarIcon: ({color, size}) => <Ionicons name={'calendar'} size={size} color={color} />
+                tabBarIcon: ({color, size}) => <Ionicons name={'calendar'} size={size} color={color}/>
             }}/>
         </Tab.Navigator>
     )
@@ -38,11 +48,17 @@ function ExpensesOverview() {
 export default function App() {
     return (
         <NavigationContainer>
-            <Stack.Navigator initialRouteName={'ExpensesOverview'}>
+            <Stack.Navigator initialRouteName={'ExpensesOverview'} screenOptions={{
+                headerStyle: {backgroundColor: GlobalStyles.colors.primary500},
+                headerTintColor: 'white',
+            }}
+            >
                 <Stack.Screen name="ExpensesOverview" component={ExpensesOverview} options={{
                     headerShown: false
                 }}/>
-                <Stack.Screen name="ManageExpense" component={ManageExpense}/>
+                <Stack.Screen name="ManageExpense" component={ManageExpense} options={{
+                    presentation: 'modal'
+                }}/>
             </Stack.Navigator>
         </NavigationContainer>
     );
