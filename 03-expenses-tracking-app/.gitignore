@@ -5,6 +5,7 @@
 __generated__
 .idea
 .DS_Store
+.env
 
 # Xcode
 !**/*.xcodeproj

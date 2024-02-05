@@ -5,10 +5,14 @@ import Button from "../UI/Button";
 import {getFormattedDate} from "../../utils/date";
 import {GlobalStyles} from "../../constants/styles";
 
+function getRandomInt(max) {
+    return Math.floor(Math.random() * max);
+}
+
 function ExpenseForm({onCancel, onSubmit, submitButtonLabel, defaultValues}) {
     const [inputs, setInputs] = useState({
         amount: {
-            value: defaultValues?.amount.toString() || (0).toString(),
+            value: defaultValues?.amount.toString() || (getRandomInt(200)).toString(),
             isValid: true,
         },
         date: {
