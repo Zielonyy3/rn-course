@@ -1,10 +1,14 @@
 import ExpensesOutput from "../components/ExpensesOutput/ExpensesOutput";
 import {StyleSheet} from 'react-native';
-import {DUMMY_EXPENSES} from "./RecentExpenses";
+import {ExpensesContext} from "../store/expenses-context";
+import {useContext} from "react";
+
 
 function AllExpenses() {
+    const expensesCtx = useContext(ExpensesContext);
+
     return (
-        <ExpensesOutput expenses={DUMMY_EXPENSES} expensesPeriod={'Total'}/>
+        <ExpensesOutput expenses={expensesCtx.expenses} expensesPeriod={'Total'} fallbackText={'No expenses found'}/>
     );
 }
 
